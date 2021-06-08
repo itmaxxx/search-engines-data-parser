@@ -25,7 +25,7 @@ async function parseQuery(query) {
   }
 
   if (links.length) {
-    fs.writeFile(`./outputs/${query.replace(' ', '_')}-google.json`, JSON.stringify(links), (err) => {
+    fs.writeFile(`./outputs/${query.replace(/ /g, '_')}-google.json`, JSON.stringify(links), (err) => {
       if (err) return console.error(err);
 
       console.log('Links written to output file');
