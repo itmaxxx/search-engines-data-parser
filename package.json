@@ -1,0 +1,16 @@
+{
+  "name": "search-parsers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "google-it": "^1.6.2",
+    "selenium-webdriver": "^4.0.0-beta.4"
+  }
+}
