@@ -12,7 +12,7 @@ async function parseQuery(query) {
     for (let pageNum = 0; pageNum < 10; pageNum++) {
       await new Promise((resolve, reject) => { 
         googleIt({ ...options, start: pageNum, query }).then(res => {
-          links.push(res);
+          links.push(...res);
 
           resolve();
         }).catch(err => {
