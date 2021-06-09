@@ -1,0 +1,53 @@
+<nav class='navbar navbar-expand-lg navbar-light bg-light'>
+	<div class='container-fluid'>
+		<a class='navbar-brand' href='/parser/upload'>Парсер</a>
+		<button
+			class='navbar-toggler'
+			type='button'
+			data-bs-toggle='collapse'
+			data-bs-target='#navbarSupportedContent'
+			aria-controls='navbarSupportedContent'
+			aria-expanded='false'
+			aria-label='Toggle navigation'
+		>
+			<span class='navbar-toggler-icon'></span>
+		</button>
+		<div class='collapse navbar-collapse' id='navbarSupportedContent'>
+			<ul class='navbar-nav me-auto mb-2 mb-lg-0'>
+				<li class='nav-item'>
+					<a
+						class='nav-link active'
+						aria-current='page'
+						href='/parser/view'
+					>Просмотр контактов</a>
+				</li>
+				<li class='nav-item'>
+					<a
+						class='nav-link active'
+						aria-current='page'
+						href='/parser/upload'
+					>Загрузить файл</a>
+				</li>
+			</ul>
+			<form class='d-flex' action='/parser/view' method='GET'>
+				<input
+					class='form-control me-2'
+					type='search'
+					name='search'
+					placeholder='Номер или имя'
+					aria-label='Номер или имя'
+				/>
+				<button class='btn btn-outline-success' type='submit'>
+					Поиск
+				</button>
+				<button
+					class='btn btn-outline-danger ms-2'
+					type='button'
+					id='logoutBtn'
+				>
+					Выйти
+				</button>
+			</form>
+		</div>
+	</div>
+</nav>

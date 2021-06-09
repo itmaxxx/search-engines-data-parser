@@ -1,5 +1,5 @@
-const parseGoogle = require('./src/SearchEngines/google');
-const parseYandex = require('./src/SearchEngines/yandex');
+const parseGoogle = require('./src/search_engines/google');
+const parseYandex = require('./src/search_engines/yandex');
 const parseWebsite = require('./src/parseWebsite');
 const fs = require('fs');
 
