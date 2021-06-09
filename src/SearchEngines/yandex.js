@@ -82,6 +82,8 @@ async function parseQuery(query) {
 
       console.log('Links written to output file');
     });
+
+    return links;
   } else {
     console.log('No links found');
   }

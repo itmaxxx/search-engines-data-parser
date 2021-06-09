@@ -1,19 +1,16 @@
-const {Builder, By} = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
+const cheerio = require('cheerio');
+const axios = require('axios');
 const fs = require('fs');
-
-const screen = {
-  width: 1920,
-  height: 1080
-};
 
 // Rewrite with cheerio
 
 async function parseWebsite(url) {
-  let driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless().windowSize(screen)).build();
-
   try {
-    await driver.get(url);
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    let phones = [];
+    let emails = [];
 
     // fs.writeFile(url.replace(/(http:\/\/|https:\/\/)/g, '').replace(/\//g, '_').replace(/\./g, '_') + '.txt', await (await driver.findElement(By.css('body'))).getAttribute('innerText'), (err) => {
     //   if (err) throw(err);
@@ -21,27 +18,48 @@ async function parseWebsite(url) {
     //   console.log('Written source');
     // });
 
-    let links = await driver.findElements(By.css('a'));
+    let links = $('a');
 
     for (let i = 0; i < links.length; i++) {
       const link = links[i];
       
       try {
-        let href = await link.getAttribute('href');
+        let href = link.attribs.href;
 
-        if (href.indexOf('tel:') !== -1) {
+        if (href === '#') {
+          continue;
+        }
+
+        if (href.indexOf('tel:') !== -1 || href.indexOf('viber://chat') !== -1) {
           console.log(href);
+
+          phones.push(href);
         } else if (href.indexOf('mailto:') !== -1) {
           console.log(href);
+
+          emails.push(href);
         }
       } catch(err) {
         continue;
       }
     }
+
+    // let body = $('body').text();
+
+    // fs.writeFile(`./text/${url.replace(/\//g, '')}-text.txt`, body, (err) => {
+    //   if (err) return console.error(err);
+
+    //   console.log('Body text written to output file');
+    // });
+
+    phones = phones.filter((p, pos) => phones.indexOf(p) === pos);
+    emails = emails.filter((p, pos) => emails.indexOf(p) === pos);
+
+    console.log({ url, phones, emails });
+
+    return { url, phones, emails };
   } catch (err) {
     console.error(err);
-  } finally {
-    await driver.quit();
   }
 }
 
