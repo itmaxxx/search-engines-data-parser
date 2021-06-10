@@ -1,53 +1,94 @@
 const express = require('express');
+const fs = require('fs');
+const {
+	addQuery,
+	setQueryStatus,
+	setQueryLinks,
+	setQueryCurrentLink
+} = require('../../db/queries');
 const router = express.Router();
+const parseGoogle = require('../search_engines/google');
+const parseYandex = require('../search_engines/yandex');
+const parseWebsite = require('../parseWebsite');
 
 // api/parser/parse
 router.post('/parse', async (req, res) => {
 	let query = req.body.query;
-
 	let outputFileName = `${Date.now()}-contacts.json`;
 
-	return res.json({ ok: true, outputFileName });
+	let queryID = await addQuery({ query, output: outputFileName });
 
-	let glinks = await parseGoogle(query);
-	let ylinks = await parseYandex(query);
-	let contacts = [];
+	res.json({ ok: true, status: 'your query is processing' });
 
-	console.log({
-		glinks: glinks ? glinks.length : 0,
-		ylinks: ylinks ? ylinks.length : 0
-	});
+	try {
+		let glinks = await parseGoogle(query);
+		let ylinks = await parseYandex(query);
+		let contacts = [];
+		let links_count = glinks ? glinks.length : 0 + ylinks ? ylinks.length : 0;
+		let current_link = 0;
 
-	if (glinks) {
-		for (let i = 0; i < glinks.length; i++) {
-			let contact = await parseWebsite(glinks[i].link);
+		console.log({
+			glinks: glinks ? glinks.length : 0,
+			ylinks: ylinks ? ylinks.length : 0
+		});
 
-			if (contact) {
-				contacts.push(contact);
+		await setQueryStatus({
+			id: queryID,
+			status: 'parsed search engines, parsing websites'
+		});
+		await setQueryLinks({ id: queryID, links_count });
+
+		if (glinks) {
+			for (let i = 0; i < glinks.length; i++) {
+				let contact = await parseWebsite(glinks[i].link);
+
+				current_link++;
+
+				setQueryCurrentLink({ id: queryID, current_link });
+
+				if (contact) {
+					contacts.push(contact);
+				}
 			}
 		}
-	}
 
-	if (ylinks) {
-		for (let i = 0; i < ylinks.length; i++) {
-			let contact = await parseWebsite(ylinks[i].href);
+		if (ylinks) {
+			for (let i = 0; i < ylinks.length; i++) {
+				let contact = await parseWebsite(ylinks[i].href);
 
-			if (contact) {
-				contacts.push(contact);
+				current_link++;
+
+				setQueryCurrentLink({ id: queryID, current_link });
+
+				if (contact) {
+					contacts.push(contact);
+				}
 			}
 		}
-	}
 
-	if (contacts.length) {
-		fs.writeFile(
-			`./outputs/${outputFileName}`,
-			JSON.stringify(contacts),
-			(err) => {
-				if (err) return console.error(err);
+		await setQueryStatus({
+			id: queryID,
+			status: 'parsed websites, writing to output file'
+		});
 
-				console.log('Contacts written to output file');
-			}
-		);
+		if (contacts.length) {
+			fs.writeFile(
+				`./outputs/${outputFileName}`,
+				JSON.stringify(contacts),
+				(err) => {
+					if (err) return console.error(err);
+
+					console.log('Contacts written to output file');
+
+					setQueryStatus({
+						id: queryID,
+						status: 'finished'
+					});
+				}
+			);
+		}
+	} catch (err) {
+		console.error(err);
 	}
 });
 

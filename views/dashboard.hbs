@@ -23,6 +23,7 @@
 							<tr>
 								<th scope='col'>#</th>
 								<th>Запрос</th>
+								<th>Кол-во ссылок</th>
 								<th>Статус парсинга</th>
 								<th>Действия</th>
 							</tr>
@@ -32,9 +33,11 @@
 								<tr>
 									<th scope='row'>{{this.Id}}</th>
 									<td>{{this.Query}}</td>
-									<td>{{this.Status}}</td>
+									<td>{{this.CurrentLink}} / {{this.LinksCount}}</td>
+									<td>{{this.Status}} {{this.Error}}</td>
 									<td class="d-flex justify-content-center">
 										<div class="btn-group" role="group" aria-label="Basic example">
+  										<a href='{{this.Output}}' class='btn btn-primary'>Результаты</a>
   										<a href='/dashboard/results?id={{this.Id}}' class='btn btn-success'>Детальней</a>
 										</div>
 									</td>

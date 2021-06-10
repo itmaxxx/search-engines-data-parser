@@ -9,12 +9,13 @@ CREATE TABLE Users
   Password VARCHAR(256)
 );
 
-CREATE TABLE ParsingResults
+CREATE TABLE Queries
 (
   Id INT PRIMARY KEY AUTO_INCREMENT,
   Query VARCHAR(256),
   Status VARCHAR(256),
   Error VARCHAR(256),
   LinksCount INT,
+  CurrentLink INT,
   Output VARCHAR(256)
 );

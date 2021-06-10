@@ -4,7 +4,7 @@ const fs = require('fs');
 
 async function parseWebsite(url) {
 	try {
-		const response = await axios.get(url);
+		const response = await axios.get(url, { timeout: 10000 });
 		const $ = cheerio.load(response.data);
 
 		let phones = [];

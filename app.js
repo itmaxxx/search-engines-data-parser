@@ -4,6 +4,7 @@ const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const auth = require('./src/middleware/auth.middleware');
+const { getQueries } = require('./db/queries');
 
 require('dotenv').config();
 
@@ -30,6 +31,7 @@ app.use('/api/parser', require('./src/routes/parser.routes'));
 app.use('/api/auth', require('./src/routes/auth.routes'));
 
 app.use(express.static('public'));
+app.use(express.static('outputs'));
 
 app.get('/login', (req, res) => {
 	res.sendFile(path.join(__dirname, '/views/login.html'));
@@ -42,13 +44,13 @@ app.get('/register', (req, res) => {
 	}
 });
 
-app.get('/dashboard', auth, (req, res) => {
-	res.render(path.join(__dirname, '/views/dashboard.hbs'));
+app.get('/dashboard', auth, async (req, res) => {
+	let queries = await getQueries();
+
+	res.render(path.join(__dirname, '/views/dashboard.hbs'), { queries });
 });
 
 app.get('/', auth, (req, res) => {
-	console.log(req.user);
-
 	if (req.user) {
 		res.redirect(301, '/dashboard');
 	} else {
