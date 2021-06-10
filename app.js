@@ -42,11 +42,15 @@ app.get('/register', (req, res) => {
 	}
 });
 
+app.get('/dashboard', auth, (req, res) => {
+	res.render(path.join(__dirname, '/views/dashboard.hbs'));
+});
+
 app.get('/', auth, (req, res) => {
 	console.log(req.user);
 
 	if (req.user) {
-		res.redirect(301, '/parser/results');
+		res.redirect(301, '/dashboard');
 	} else {
 		res.redirect(301, '/login');
 	}

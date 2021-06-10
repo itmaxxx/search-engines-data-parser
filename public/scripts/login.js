@@ -25,7 +25,7 @@ form.addEventListener('submit', (e) => {
 
 			alert(`Вы были авторизованы под пользователем ${username}`);
 
-			window.location = '/parser/upload';
+			window.location = '/dashboard';
 		} else {
 			alert(`Ошибка: ${json.message}`);
 		}

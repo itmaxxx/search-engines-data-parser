@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
 	try {
 		const token = req.cookies.token;
 
-		if (!token || (token && token === 'logout')) {
+		if (!token || token === 'logout') {
 			return res
 				.status(401)
 				.sendFile(path.join(__dirname, '../../views/no_auth.html'));
