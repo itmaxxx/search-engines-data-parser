@@ -19,35 +19,19 @@
 						class='nav-link active'
 						aria-current='page'
 						href='/parser/view'
-					>Просмотр контактов</a>
+					>Результаты парсинга</a>
 				</li>
 				<li class='nav-item'>
 					<a
 						class='nav-link active'
 						aria-current='page'
 						href='/parser/upload'
-					>Загрузить файл</a>
+					>Новый парсинг</a>
 				</li>
 			</ul>
-			<form class='d-flex' action='/parser/view' method='GET'>
-				<input
-					class='form-control me-2'
-					type='search'
-					name='search'
-					placeholder='Номер или имя'
-					aria-label='Номер или имя'
-				/>
-				<button class='btn btn-outline-success' type='submit'>
-					Поиск
-				</button>
-				<button
-					class='btn btn-outline-danger ms-2'
-					type='button'
-					id='logoutBtn'
-				>
-					Выйти
-				</button>
-			</form>
+			<button class='btn btn-outline-danger ms-2' type='button' id='logoutBtn'>
+				Выйти
+			</button>
 		</div>
 	</div>
 </nav>

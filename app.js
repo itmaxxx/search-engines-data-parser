@@ -44,7 +44,8 @@ app.get('/register', (req, res) => {
 
 app.get('/', auth, (req, res) => {
 	console.log(req.user);
-	if (req.user !== undefined) {
+
+	if (req.user) {
 		res.redirect(301, '/parser/results');
 	} else {
 		res.redirect(301, '/login');

@@ -1,7 +1,7 @@
 const { pool } = require('./pool');
 
 function addUser({ username, password }) {
-	const sql = 'INSERT INTO users (Username, Password) VALUES (?, ?)';
+	const sql = 'INSERT INTO Users (Username, Password) VALUES (?, ?)';
 	const data = [username, password];
 
 	return new Promise((resolve, reject) => {
@@ -16,7 +16,7 @@ function addUser({ username, password }) {
 }
 
 function getUserByUsername({ username }) {
-	const sql = 'SELECT * FROM users WHERE Username=(?)';
+	const sql = 'SELECT * FROM Users WHERE Username=(?)';
 	const data = [username];
 
 	return new Promise((resolve, reject) => {
