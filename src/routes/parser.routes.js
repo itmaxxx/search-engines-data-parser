@@ -14,11 +14,19 @@ const parseWebsite = require('../parseWebsite');
 // api/parser/parse
 router.post('/parse', async (req, res) => {
 	let query = req.body.query;
+
+	if (!query.length) {
+		return res.json({ error: true, message: '"query" is empty' });
+	}
+
 	let outputFileName = `${Date.now()}-contacts.json`;
 
 	let queryID = await addQuery({ query, output: outputFileName });
 
-	res.json({ ok: true, status: 'your query is processing' });
+	res.json({
+		ok: true,
+		status: 'Запрос добавлен, начинается парсинг поисковиков'
+	});
 
 	try {
 		let glinks = await parseGoogle(query);
@@ -34,7 +42,7 @@ router.post('/parse', async (req, res) => {
 
 		await setQueryStatus({
 			id: queryID,
-			status: 'parsed search engines, parsing websites'
+			status: 'Парсинг П.С. завершен. Начинается парсиинг сайтов.'
 		});
 		await setQueryLinks({ id: queryID, links_count });
 
@@ -68,7 +76,7 @@ router.post('/parse', async (req, res) => {
 
 		await setQueryStatus({
 			id: queryID,
-			status: 'parsed websites, writing to output file'
+			status: 'Парсинг сайтов закончен. Запись в файл с результатами.'
 		});
 
 		if (contacts.length) {
@@ -82,7 +90,7 @@ router.post('/parse', async (req, res) => {
 
 					setQueryStatus({
 						id: queryID,
-						status: 'finished'
+						status: 'Завершен'
 					});
 				}
 			);
@@ -90,13 +98,6 @@ router.post('/parse', async (req, res) => {
 	} catch (err) {
 		console.error(err);
 	}
-});
-
-// api/parser/result
-router.get('/result', (req, res) => {
-	console.log(req.query);
-
-	res.end('works');
 });
 
 module.exports = router;

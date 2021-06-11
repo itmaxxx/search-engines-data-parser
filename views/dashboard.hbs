@@ -15,6 +15,16 @@
 
 		<div class='container mt-3'>
       <h1>Панель управления</h1>
+
+			<form class="row g-2" id="parseForm">
+				<div class="col-auto">
+					<label for="query" class="visually-hidden">Поисковый запрос</label>
+					<input type="text" name="query" class="form-control" id="query" placeholder="Поисковый запрос">
+				</div>
+				<div class="col-auto">
+					<button type="submit" class="btn btn-primary mb-1" id="parse">Спарсить</button>
+				</div>
+			</form>
 			
 			<div class='row mt-2'>
 				<div class='col'>
@@ -49,6 +59,7 @@
 			</div>
 		</div>
 
+		<script src="/scripts/parse.js"></script>
 		{{> footer}}
 	</body>
 </html>

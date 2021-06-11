@@ -14,7 +14,7 @@ function getQueries() {
 
 function addQuery({ query, output }) {
 	const sql = 'INSERT INTO Queries (Query, Status, Output) VALUES (?, ?, ?)';
-	const data = [query, 'new', output];
+	const data = [query, 'Новый', output];
 
 	return new Promise((resolve, reject) => {
 		pool.query(sql, data, function (err, results) {

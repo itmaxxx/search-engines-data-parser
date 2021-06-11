@@ -12,10 +12,6 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cookieParser());
-
 app.set('view engine', 'hbs');
 app.engine(
 	'hbs',
@@ -26,12 +22,14 @@ app.engine(
 	})
 );
 hbs.registerPartials(__dirname + '/views/partials');
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.static('public'));
+app.use(express.static('outputs'));
 
 app.use('/api/parser', require('./src/routes/parser.routes'));
 app.use('/api/auth', require('./src/routes/auth.routes'));
-
-app.use(express.static('public'));
-app.use(express.static('outputs'));
 
 app.get('/login', (req, res) => {
 	res.sendFile(path.join(__dirname, '/views/login.html'));
