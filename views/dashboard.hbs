@@ -47,8 +47,9 @@
 									<td>{{this.Status}} {{this.Error}}</td>
 									<td class="d-flex justify-content-center">
 										<div class="btn-group" role="group" aria-label="Basic example">
-  										<a href='{{this.Output}}' class='btn btn-primary'>Результаты</a>
-  										<a href='/dashboard/results?id={{this.Id}}' class='btn btn-success'>Детальней</a>
+  										{{!-- <a href='{{this.Output}}' class='btn btn-primary'>Результаты</a> --}}
+  										<a href='/dashboard/details?id={{this.Id}}' class='btn btn-success'>Детальней</a>
+  										<a href='#' onclick="deleteQuery(this, {{this.Id}})" class='btn btn-danger'>Удалить</a>
 										</div>
 									</td>
 								</tr>
@@ -60,6 +61,7 @@
 		</div>
 
 		<script src="/scripts/parse.js"></script>
+		<script src="/scripts/delete.js"></script>
 		{{> footer}}
 	</body>
 </html>

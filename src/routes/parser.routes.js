@@ -4,7 +4,8 @@ const {
 	addQuery,
 	setQueryStatus,
 	setQueryLinks,
-	setQueryCurrentLink
+	setQueryCurrentLink,
+	deleteQuery
 } = require('../../db/queries');
 const router = express.Router();
 const parseGoogle = require('../search_engines/google');
@@ -42,7 +43,7 @@ router.post('/parse', async (req, res) => {
 
 		await setQueryStatus({
 			id: queryID,
-			status: 'Парсинг П.С. завершен. Начинается парсиинг сайтов.'
+			status: 'Парсинг П.С. завершен. Начинается парсинг сайтов.'
 		});
 		await setQueryLinks({ id: queryID, links_count });
 
@@ -97,6 +98,22 @@ router.post('/parse', async (req, res) => {
 		}
 	} catch (err) {
 		console.error(err);
+	}
+});
+
+router.delete('/query', async (req, res) => {
+	const { id } = req.body;
+
+	if (!id) {
+		return res.json({ error: true, message: 'id should not be empty' });
+	}
+
+	try {
+		await deleteQuery({ id });
+
+		return res.json({ id });
+	} catch (e) {
+		return res.json({ error: true, message: e.message });
 	}
 });
 

@@ -37,7 +37,7 @@ function setQueryStatus({ id, status }) {
 
 			console.log(`Updated status "${status}" of query with ID: ${id}`);
 
-			resolve(results.insertId);
+			resolve(results);
 		});
 	});
 }
@@ -54,7 +54,7 @@ function setQueryLinks({ id, links_count }) {
 				`Updated links count "${links_count}" of query with ID: ${id}`
 			);
 
-			resolve(results.insertId);
+			resolve(results);
 		});
 	});
 }
@@ -71,7 +71,22 @@ function setQueryCurrentLink({ id, current_link }) {
 				`Updated current_link "${current_link}" of query with ID: ${id}`
 			);
 
-			resolve(results.insertId);
+			resolve(results);
+		});
+	});
+}
+
+function deleteQuery({ id }) {
+	const sql = 'DELETE FROM Queries WHERE Id=?';
+	const data = [id];
+
+	return new Promise((resolve, reject) => {
+		pool.query(sql, data, function (err, results) {
+			if (err) reject(err);
+
+			console.log(`Deleted query with ID: ${id}`);
+
+			resolve(results);
 		});
 	});
 }
@@ -81,5 +96,6 @@ module.exports = {
 	addQuery,
 	setQueryStatus,
 	setQueryLinks,
-	setQueryCurrentLink
+	setQueryCurrentLink,
+	deleteQuery
 };
