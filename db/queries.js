@@ -12,6 +12,19 @@ function getQueries() {
 	});
 }
 
+function getQuery({ id }) {
+	const sql = 'SELECT * FROM Queries WHERE Id=?';
+	const data = [id];
+
+	return new Promise((resolve, reject) => {
+		pool.query(sql, data, function (err, results) {
+			if (err) reject(err);
+
+			resolve(results);
+		});
+	});
+}
+
 function addQuery({ query, output }) {
 	const sql = 'INSERT INTO Queries (Query, Status, Output) VALUES (?, ?, ?)';
 	const data = [query, 'Новый', output];
@@ -93,6 +106,7 @@ function deleteQuery({ id }) {
 
 module.exports = {
 	getQueries,
+	getQuery,
 	addQuery,
 	setQueryStatus,
 	setQueryLinks,

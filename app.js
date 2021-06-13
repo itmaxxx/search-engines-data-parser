@@ -4,7 +4,7 @@ const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const auth = require('./src/middleware/auth.middleware');
-const { getQueries } = require('./db/queries');
+const { getQueries, getQuery } = require('./db/queries');
 
 require('dotenv').config();
 
@@ -46,6 +46,12 @@ app.get('/dashboard', auth, async (req, res) => {
 	let queries = await getQueries();
 
 	res.render(path.join(__dirname, '/views/dashboard.hbs'), { queries });
+});
+
+app.get('/dashboard/details/:id', auth, async (req, res) => {
+	let data = await getQuery({ id: req.params.id });
+
+	res.render(path.join(__dirname, '/views/details.hbs'), { ...data[0] });
 });
 
 app.get('/', auth, (req, res) => {
