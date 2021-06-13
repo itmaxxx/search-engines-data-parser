@@ -5,12 +5,14 @@ const {
 	setQueryStatus,
 	setQueryLinks,
 	setQueryCurrentLink,
-	deleteQuery
+	deleteQuery,
+	getQuery
 } = require('../../db/queries');
 const router = express.Router();
 const parseGoogle = require('../search_engines/google');
 const parseYandex = require('../search_engines/yandex');
 const parseWebsite = require('../parseWebsite');
+const path = require('path');
 
 // api/parser/parse
 router.post('/parse', async (req, res) => {

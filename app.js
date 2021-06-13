@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const auth = require('./src/middleware/auth.middleware');
 const { getQueries, getQuery } = require('./db/queries');
+const fs = require('fs');
 
 require('dotenv').config();
 
@@ -54,10 +55,47 @@ app.get('/dashboard/details/:id', auth, async (req, res) => {
 	let cl = data[0].CurrentLink || 0;
 	let lc = data[0].LinksCount || 0;
 	let progress = cl * (100 / lc);
+	let output = null;
+
+	try {
+		let outputExists = await new Promise((resolve, reject) => {
+			fs.access(
+				path.join(__dirname + '/outputs/' + data[0].Output),
+				fs.F_OK,
+				(err) => {
+					if (err) {
+						return reject(err);
+					}
+
+					resolve(true);
+				}
+			);
+		});
+
+		if (outputExists) {
+			let tmpOutput = await new Promise((resolve, reject) => {
+				fs.readFile(
+					path.join(__dirname + '/outputs/' + data[0].Output),
+					(err, data) => {
+						if (err) {
+							return reject(err);
+						}
+
+						resolve(data);
+					}
+				);
+			});
+
+			output = JSON.parse(tmpOutput);
+		}
+	} catch (err) {
+		console.log(err);
+	}
 
 	res.render(path.join(__dirname, '/views/details.hbs'), {
 		...data[0],
-		Progress: progress
+		Progress: progress,
+		Output: output
 	});
 });
 
