@@ -22,7 +22,10 @@
 					<input type="text" name="query" class="form-control" id="query" placeholder="Поисковый запрос">
 				</div>
 				<div class="col-auto">
-					<button type="submit" class="btn btn-primary mb-1" id="parse">Спарсить</button>
+					<button type="submit" class="btn btn-primary mb-1" id="parse">Спарсить <i style="height: 20px; margin-top: -3px;" data-feather="search"></i></button>
+				</div>
+				<div class="col-auto">
+					<a class="btn btn-primary" href="/dashboard">Обновить <i style="height: 20px; margin-top: -3px;" data-feather="refresh-ccw"></i></a>
 				</div>
 			</form>
 			
@@ -33,8 +36,8 @@
 							<tr>
 								<th scope='col'>#</th>
 								<th>Запрос</th>
-								<th>Кол-во ссылок</th>
 								<th>Статус парсинга</th>
+								<th>Кол-во ссылок</th>
 								<th>Действия</th>
 							</tr>
 						</thead>
@@ -43,8 +46,8 @@
 								<tr>
 									<th scope='row'>{{this.Id}}</th>
 									<td>{{this.Query}}</td>
-									<td>{{this.CurrentLink}} / {{this.LinksCount}}</td>
 									<td>{{this.Status}} {{this.Error}}</td>
+									<td>{{this.CurrentLink}} из {{this.LinksCount}}</td>
 									<td class="d-flex justify-content-center">
 										<div class="btn-group" role="group" aria-label="Basic example">
   										{{!-- <a href='{{this.Output}}' class='btn btn-primary'>Результаты</a> --}}

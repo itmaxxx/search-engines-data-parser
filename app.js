@@ -51,7 +51,14 @@ app.get('/dashboard', auth, async (req, res) => {
 app.get('/dashboard/details/:id', auth, async (req, res) => {
 	let data = await getQuery({ id: req.params.id });
 
-	res.render(path.join(__dirname, '/views/details.hbs'), { ...data[0] });
+	let cl = data[0].CurrentLink || 0;
+	let lc = data[0].LinksCount || 0;
+	let progress = cl * (100 / lc);
+
+	res.render(path.join(__dirname, '/views/details.hbs'), {
+		...data[0],
+		Progress: progress
+	});
 });
 
 app.get('/', auth, (req, res) => {

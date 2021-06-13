@@ -18,18 +18,23 @@
 				<div class='col'>
 					<nav aria-label="breadcrumb" class="mt-3">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/parser/dashboard">Панель управления</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard">Панель управления</a></li>
 							<li class="breadcrumb-item active" aria-current="page">{{Query}}</li>
 						</ol>
 					</nav>
 					<div class="card mb-3 col-12">
 						<div class="row g-0">
-							<div class="col-md-4" style="overflow: hidden;">
-								
-							</div>
-							<div class="col-md-8">
+							
+							<div class="col-md-12">
 								<div class="card-body">
 									<h4 class="card-title">{{Query}} <span class="badge bg-secondary">#{{Id}}</span></h4>
+									<p class="card-text">
+										Статус парсинга: {{Status}} <a class="btn btn-primary ms-2" href="/dashboard/details/{{Id}}">Обновить <i style="height: 20px; margin-top: -3px;" data-feather="refresh-ccw"></i></a>
+									</p>
+									<h4>{{CurrentLink}} из {{LinksCount}} ссылок</h4>
+									<div class="progress">
+										<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{Progress}}%" aria-valuenow="{{Progress}}" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
 									{{#if Phones}}
 										<p class="card-text">
 											Номера телефона
@@ -42,11 +47,7 @@
 										{{else}}
 										<h5 class="card-text">{{Phone}}</h5>
 									{{/if}}
-									<p class="card-text">
-										Дополнительная информация
-										<ul class="list-group" id='information'></ul>
-									</p>
-									<a href="/{{Output}}" target="_blank" class="btn btn-primary">Результаты в JSON</a>
+									<a href="/{{Output}}" target="_blank" download="true" class="btn btn-primary mt-3">Результат в JSON <i style="height: 20px; margin-top: -3px;" data-feather="download"></i></a>
 								</div>
 							</div>
 						</div>
