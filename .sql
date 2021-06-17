@@ -1,6 +1,6 @@
-CREATE DATABASE SearchEnginesParser;
+CREATE DATABASE search_engines_parser;
 
-USE SearchEnginesParser;
+USE search_engines_parser;
 
 CREATE TABLE Users
 (
