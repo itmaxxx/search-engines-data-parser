@@ -10,7 +10,7 @@ const screen = {
 async function parseQuery(query) {
 	let driver = await new Builder()
 		.forBrowser('chrome')
-		.setChromeOptions(new chrome.Options().headless().windowSize(screen))
+		.setChromeOptions(new chrome.Options().addArguments(['--headless','--no-sandbox', '--disable-dev-shm-usage']).windowSize(screen))
 		.build();
 	let links = [];
 
