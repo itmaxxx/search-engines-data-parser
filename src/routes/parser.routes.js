@@ -35,7 +35,7 @@ router.post('/parse', async (req, res) => {
 		let glinks = await parseGoogle(query);
 		let ylinks = await parseYandex(query);
 		let contacts = [];
-		let links_count = glinks ? glinks.length : 0 + ylinks ? ylinks.length : 0;
+		let links_count = parseInt((glinks ? glinks.length : 0) + (ylinks ? ylinks.length : 0));
 		let current_link = 0;
 
 		console.log({
