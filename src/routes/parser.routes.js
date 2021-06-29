@@ -13,6 +13,7 @@ const parseGoogle = require('../search_engines/google');
 const parseYandex = require('../search_engines/yandex');
 const parseWebsite = require('../parseWebsite');
 const path = require('path');
+const { ExportToExcel } = require('../utils/exportToExcel');
 
 // api/parser/parse
 router.post('/parse', async (req, res) => {
@@ -22,7 +23,8 @@ router.post('/parse', async (req, res) => {
 		return res.json({ error: true, message: '"query" is empty' });
 	}
 
-	let outputFileName = `${Date.now()}-contacts.json`;
+	let fileName = `${Date.now()}-contacts`;
+	let outputFileName = `${fileName}.json`;
 
 	let queryID = await addQuery({ query, output: outputFileName });
 
@@ -33,9 +35,14 @@ router.post('/parse', async (req, res) => {
 
 	try {
 		let glinks = await parseGoogle(query);
-		let ylinks = await parseYandex(query);
+		let ylinks = [];
+		if (process.env.NODE_ENV === 'production') {
+			ylinks = await parseYandex(query);
+		}
 		let contacts = [];
-		let links_count = parseInt((glinks ? glinks.length : 0) + (ylinks ? ylinks.length : 0));
+		let links_count = parseInt(
+			(glinks ? glinks.length : 0) + (ylinks ? ylinks.length : 0)
+		);
 		let current_link = 0;
 
 		console.log({
@@ -83,6 +90,8 @@ router.post('/parse', async (req, res) => {
 		});
 
 		if (contacts.length) {
+			new ExportToExcel(query, fileName, contacts);
+
 			fs.writeFile(
 				`./outputs/${outputFileName}`,
 				JSON.stringify(contacts),

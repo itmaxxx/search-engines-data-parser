@@ -6,6 +6,7 @@ const path = require('path');
 const auth = require('./src/middleware/auth.middleware');
 const { getQueries, getQuery } = require('./db/queries');
 const fs = require('fs');
+const { ExportToExcel } = require('./src/utils/exportToExcel');
 
 require('dotenv').config();
 
