@@ -36,6 +36,8 @@
 										<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{Progress}}%" aria-valuenow="{{Progress}}" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 									{{#if Output}}
+										<a href="/{{Output}}" target="_blank" download="{{Query}}.json" class="btn btn-dark mt-3">Результат в JSON <i style="height: 20px; margin-top: -3px;" data-feather="download"></i></a>
+										<a href="/{{Excel}}" target="_blank" download="{{Query}}.xlsx" class="btn btn-success mt-3">Результат в EXCEL <i style="height: 20px; margin-top: -3px;" data-feather="download"></i></a>
 										<p class="card-text">
 											<h4>Результаты парсинга</h4>
 											<ol class="list-group list-group-numbered">
@@ -64,10 +66,11 @@
 												{{/each}}
 											</ol>
 										</p>
+										<a href="/{{Output}}" target="_blank" download="{{Query}}.json" class="btn btn-dark mt-3">Результат в JSON <i style="height: 20px; margin-top: -3px;" data-feather="download"></i></a>
+										<a href="/{{Excel}}" target="_blank" download="{{Query}}.xlsx" class="btn btn-success mt-3">Результат в EXCEL <i style="height: 20px; margin-top: -3px;" data-feather="download"></i></a>
 										{{else}}
 										<h5 class="card-text">{{Phone}}</h5>
 									{{/if}}
-									<a href="/{{Output}}" target="_blank" download="true" class="btn btn-primary mt-3">Результат в JSON <i style="height: 20px; margin-top: -3px;" data-feather="download"></i></a>
 								</div>
 							</div>
 						</div>

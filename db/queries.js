@@ -25,9 +25,10 @@ function getQuery({ id }) {
 	});
 }
 
-function addQuery({ query, output }) {
-	const sql = 'INSERT INTO Queries (Query, Status, Output) VALUES (?, ?, ?)';
-	const data = [query, 'Новый', output];
+function addQuery({ query, output, excel }) {
+	const sql =
+		'INSERT INTO Queries (Query, Status, Output, Excel) VALUES (?, ?, ?, ?)';
+	const data = [query, 'Новый', output, excel];
 
 	return new Promise((resolve, reject) => {
 		pool.query(sql, data, function (err, results) {

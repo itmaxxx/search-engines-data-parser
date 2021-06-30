@@ -17,5 +17,6 @@ CREATE TABLE Queries
   Error VARCHAR(256),
   LinksCount INT,
   CurrentLink INT,
-  Output VARCHAR(256)
+  Output VARCHAR(256),
+  Excel VARCHAR(256)
 );

@@ -26,7 +26,11 @@ router.post('/parse', async (req, res) => {
 	let fileName = `${Date.now()}-contacts`;
 	let outputFileName = `${fileName}.json`;
 
-	let queryID = await addQuery({ query, output: outputFileName });
+	let queryID = await addQuery({
+		query,
+		output: outputFileName,
+		excel: fileName + '.xlsx'
+	});
 
 	res.json({
 		ok: true,
