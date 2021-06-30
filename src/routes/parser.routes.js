@@ -39,10 +39,7 @@ router.post('/parse', async (req, res) => {
 
 	try {
 		let glinks = await parseGoogle(query);
-		let ylinks = [];
-		if (process.env.NODE_ENV === 'production') {
-			ylinks = await parseYandex(query);
-		}
+		let ylinks = await parseYandex(query);
 		let contacts = [];
 		let links_count = parseInt(
 			(glinks ? glinks.length : 0) + (ylinks ? ylinks.length : 0)
